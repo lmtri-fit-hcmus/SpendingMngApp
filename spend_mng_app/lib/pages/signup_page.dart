@@ -43,10 +43,6 @@ class _SignupPageState extends State<SignupPage> {
         body: SingleChildScrollView(
           child: Container(
             height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('assets/images/entry/background.png'),
-                    fit: BoxFit.fill)),
             child: Column(
               children: <Widget>[
                 Container(
