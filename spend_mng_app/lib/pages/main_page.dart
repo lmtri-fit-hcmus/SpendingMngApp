@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:jira_mobile/pages/home_page.dart';
+import 'package:jira_mobile/pages/profile_page.dart';
+import 'package:jira_mobile/values/colors_value.dart';
+import 'package:jira_mobile/values/share_keys.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -14,22 +18,8 @@ class _MainPageState extends State<MainPage> {
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 3: Profile',
-      style: optionStyle,
-    ),
+    HomePage(),
+    Profile(),
   ];
 
   void _onItemTapped(int index) {
@@ -41,26 +31,38 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: InkWell(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Icon(
-            Icons.arrow_back,
-            color: Colors.black,
+     
+      
+      floatingActionButton: Container(
+        width: 80,
+        height: 80,
+        child: FloatingActionButton.extended(
+            onPressed: () {},
+            isExtended: true,
+            backgroundColor: AppColor.dart_green,
+            shape: CircleBorder(),
+            label: Icon(Icons.add,size: 40,),
+            
           ),
-        ),
-        title: Text(
-          'Change password',
-          style: TextStyle(color: Colors.black),
-        ),
       ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      extendBodyBehindAppBar: false,
+      extendBody: true,
+      body: Stack(
+          children: <Widget>[
+            Container(
+            height: 250,
+            child: AppBar(
+            backgroundColor: AppColor.main_color,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+                bottom: Radius.elliptical(180,60),
+          ),
+              )),
       ),
+            Container(
+              child: _widgetOptions.elementAt(_selectedIndex)),]),
+      
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -68,19 +70,12 @@ class _MainPageState extends State<MainPage> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Text(
-              '+',
-              style: TextStyle(fontSize: 35),
-            ),
-            label: '',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),
             label: 'Profile',
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
+        selectedItemColor: AppColor.dart_green,
         unselectedItemColor: Colors.black,
         showUnselectedLabels: true,
         onTap: _onItemTapped,
