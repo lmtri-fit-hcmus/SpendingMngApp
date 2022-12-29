@@ -12,8 +12,8 @@ class CustomButtonView extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             border: Border.all(width: 2),
             gradient: LinearGradient(colors: [
-              Color.fromRGBO(143, 148, 251, 1),
-              Color.fromRGBO(143, 148, 251, .6),
+              Color.fromARGB(255, 72, 121, 142),
+              Color.fromARGB(116, 45, 143, 208),
             ])),
         child: Center(
           child: Text(

@@ -150,7 +150,6 @@ class _LoginPageState extends State<LoginPage> {
                                       MaterialPageRoute(
                                           builder: (context) =>
                                               ChangePasswordPage(
-                                                onFet: onFetch,
                                               )));
                                 });
                                 break;

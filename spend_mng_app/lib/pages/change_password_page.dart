@@ -7,8 +7,8 @@ import 'package:password_text_field/password_text_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ChangePasswordPage extends StatefulWidget {
-  final void Function() onFet;
-  const ChangePasswordPage({super.key, required this.onFet});
+  
+  const ChangePasswordPage({super.key});
 
   @override
   State<ChangePasswordPage> createState() => _ChangePasswordPageState();
@@ -143,7 +143,6 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                                 accountId ?? "", newPass, dataFromServer)
                             .then((value) {
                           print("after send");
-                          widget.onFet();
                           Navigator.pop(context);
                         });
                       }
