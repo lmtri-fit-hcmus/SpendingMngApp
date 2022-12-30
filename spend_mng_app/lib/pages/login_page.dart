@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:jira_mobile/custom_widgets/custom_button.dart';
 import 'package:jira_mobile/models/account_info.dart';
 import 'package:jira_mobile/backend/account_request.dart';
@@ -19,7 +20,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   List<AccountInfo> listAccInf = [];
   fetchAccount() {
-    Future<List<AccountInfo>> res = NetworkRequest.fetchAccoutInfo();
+    Future<List<AccountInfo>> res = AccountRequest.fetchAccoutInfo();
     res.then((dataFromServer) {
       setState(() {
         listAccInf = dataFromServer;
@@ -33,15 +34,20 @@ class _LoginPageState extends State<LoginPage> {
     setState(() {
       fetchAccount();
     });
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.bottom]);
   }
 
   String userName = "";
   String password = "";
   String errStr = "";
 
-  setAccountID(String _accId) async {
+  setPersonalInfo(String _accId, String fn, String ln, String em) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(AppKey.AccountID, _accId).then((bool success) {});
+    prefs.setString(AppKey.FirstName, fn).then((bool success) {});
+    prefs.setString(AppKey.LastName, ln).then((bool success) {});
+    prefs.setString(AppKey.Email, em).then((bool success) {});
   }
 
   @override
@@ -154,8 +160,11 @@ class _LoginPageState extends State<LoginPage> {
                                   if (listAccInf[i].password == password) {
                                     setState(() {
                                       errStr = "";
-                                      setAccountID(
-                                          listAccInf[i].accountId ?? "");
+                                      setPersonalInfo(
+                                          listAccInf[i].accountId ?? "",
+                                          listAccInf[i].firstName ?? "",
+                                          listAccInf[i].lastName ?? "",
+                                          listAccInf[i].email ?? "", );
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(

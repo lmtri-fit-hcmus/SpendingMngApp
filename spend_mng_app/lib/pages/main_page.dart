@@ -10,6 +10,7 @@ import 'package:jira_mobile/pages/home_page.dart';
 import 'package:jira_mobile/pages/profile_page.dart';
 import 'package:jira_mobile/values/colors_value.dart';
 import 'package:jira_mobile/values/share_keys.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -20,13 +21,17 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
+  
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
+  static List<Widget> _widgetOptions = <Widget>[
     HomePage(),
     ChartPage(),
     Profile(),
   ];
+
+
+
   @override
   void initState() {
     // TODO: implement initState

@@ -7,6 +7,10 @@ import 'package:jira_mobile/pages/login_page.dart';
 import 'package:jira_mobile/values/colors_value.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import '../values/share_keys.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -16,6 +20,29 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  late String accountId = "";
+  String firstName = "";
+  String lastName = "";
+  String email = "";
+  void getAccountInfor() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      accountId = prefs.getString(AppKey.AccountID) ?? "";
+      firstName = prefs.getString(AppKey.FirstName) ?? "";
+      lastName = prefs.getString(AppKey.LastName) ?? "";
+      email = prefs.getString(AppKey.Email) ?? "";
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      getAccountInfor();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(children: [
@@ -34,14 +61,14 @@ class _ProfileState extends State<Profile> {
             Container(
               margin: EdgeInsets.all(2),
               child: Text(
-                'Enjelin Morgeana',
+                "${firstName} ${lastName}",
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
             Container(
                 margin: EdgeInsets.only(top: 5),
                 child: Text(
-                  '@enjelin_morgeana',
+                  '@$accountId',
                   style: TextStyle(color: AppColor.main_color),
                 )),
           ],
@@ -53,17 +80,16 @@ class _ProfileState extends State<Profile> {
           child: ListView(
             shrinkWrap: true,
             children: <Widget>[
-              //Line(ic: Icons.account_circle, text: 'Personal infomation'),
-              // Line(
-              //   ic: Icons.facebook,
-              //   text: "Author contact info",
-              //   onTap: () {
-              //     Navigator.push(
-              //         context,
-              //         MaterialPageRoute(
-              //             builder: (context) => ChangePasswordPage()));
-              //   },
-              // ),
+              Line(
+                ic: Icons.account_circle,
+                text: 'Personal infomation',
+                onTap: () {},
+              ),
+              Line(
+                ic: Icons.facebook,
+                text: "Author contact info",
+                onTap: (){},
+              ),
               Line(
                 ic: Icons.password,
                 text: 'Change password',

@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:jira_mobile/models/account_info.dart';
 import 'package:jira_mobile/backend/account_request.dart';
 import 'package:password_text_field/password_text_field.dart';
@@ -13,6 +15,9 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
+  String _firstName = "";
+  String _lastName = "";
+  String _emails = "";
   String _userName = "";
   String _password = "";
   String _reEnterPassword = "";
@@ -20,6 +25,13 @@ class _SignupPageState extends State<SignupPage> {
   bool isValid = true;
   List<AccountInfo> listAccInf = [];
   String currentState = "";
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.bottom]);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,34 +52,34 @@ class _SignupPageState extends State<SignupPage> {
     String passwordInValid = "Password is at least 8 characters";
     return Container(
       child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          backgroundColor: Colors.white,
-          body: SingleChildScrollView(
-            child: Stack(
-              children: [
-                Container(
-                  child: Image.asset('assets/img/bkgr.png'),
-                ),
-                Container(
-                  child: Image.asset('assets/img/circle.png'),
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.height,
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        padding: const EdgeInsets.only(top: 20),
-                        alignment: Alignment.center,
-                        height: 100,
-                        child: Text(
-                          'SIGN UP',
-                          style: TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
-                        ),
+        backgroundColor: Colors.white,
+        body: SingleChildScrollView(
+          child: Stack(
+            children: [
+              Container(
+                child: Image.asset('assets/img/bkgr.png'),
+              ),
+              Container(
+                child: Image.asset('assets/img/circle.png'),
+              ),
+              Container(
+                height: MediaQuery.of(context).size.height,
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      padding: const EdgeInsets.only(top: 20),
+                      alignment: Alignment.center,
+                      height: 100,
+                      child: Text(
+                        'SIGN UP',
+                        style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
                       ),
-                      Padding(
+                    ),
+                    SingleChildScrollView(
+                      child: Padding(
                         padding: EdgeInsets.only(left: 30.0, right: 30.0),
                         child: Column(
                           children: <Widget>[
@@ -84,24 +96,53 @@ class _SignupPageState extends State<SignupPage> {
                                   ]),
                               child: Column(
                                 children: <Widget>[
-                                  Container(
-                                    padding: EdgeInsets.all(8.0),
-                                    decoration: BoxDecoration(
-                                        border: Border(
-                                            bottom: BorderSide(
-                                                color: Colors.grey.shade400))),
-                                    child: TextField(
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _userName = value;
-                                        });
-                                      },
-                                      decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          hintText: "Email@",
-                                          hintStyle: TextStyle(
-                                              color: Colors.grey[400])),
-                                    ),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                          flex: 3,
+                                          child: Container(
+                                              padding: EdgeInsets.all(8.0),
+                                              decoration: BoxDecoration(
+                                                  border: Border(
+                                                      bottom: BorderSide(
+                                                          color: Colors
+                                                              .grey.shade400))),
+                                              child: TextField(
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    _firstName = value;
+                                                  });
+                                                },
+                                                decoration: InputDecoration(
+                                                    border: InputBorder.none,
+                                                    hintText: "First Name",
+                                                    hintStyle: TextStyle(
+                                                        color: Colors.grey[400])),
+                                              ))),
+                                      Expanded(
+                                          flex: 4,
+                                          child: Container(
+                                              padding: EdgeInsets.all(8.0),
+                                              decoration: BoxDecoration(
+                                                  border: Border(
+                                                      left:
+                                                          BorderSide(width: 0.4),
+                                                      bottom: BorderSide(
+                                                          color: Colors
+                                                              .grey.shade400))),
+                                              child: TextField(
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    _lastName = value;
+                                                  });
+                                                },
+                                                decoration: InputDecoration(
+                                                    border: InputBorder.none,
+                                                    hintText: "Last Name",
+                                                    hintStyle: TextStyle(
+                                                        color: Colors.grey[400])),
+                                              ))),
+                                    ],
                                   ),
                                   Container(
                                     padding: EdgeInsets.all(8.0),
@@ -112,14 +153,14 @@ class _SignupPageState extends State<SignupPage> {
                                     child: TextField(
                                       onChanged: (value) {
                                         setState(() {
-                                          _userName = value;
+                                          _emails = value;
                                         });
                                       },
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
                                           hintText: "Email@",
-                                          hintStyle: TextStyle(
-                                              color: Colors.grey[400])),
+                                          hintStyle:
+                                              TextStyle(color: Colors.grey[400])),
                                     ),
                                   ),
                                   Container(
@@ -137,8 +178,8 @@ class _SignupPageState extends State<SignupPage> {
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
                                           hintText: "Username",
-                                          hintStyle: TextStyle(
-                                              color: Colors.grey[400])),
+                                          hintStyle:
+                                              TextStyle(color: Colors.grey[400])),
                                     ),
                                   ),
                                   Container(
@@ -156,8 +197,8 @@ class _SignupPageState extends State<SignupPage> {
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
                                           hintText: "Password",
-                                          hintStyle: TextStyle(
-                                              color: Colors.grey[400])),
+                                          hintStyle:
+                                              TextStyle(color: Colors.grey[400])),
                                     ),
                                   ),
                                   Container(
@@ -171,16 +212,15 @@ class _SignupPageState extends State<SignupPage> {
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
                                           hintText: "Re-Enter Password",
-                                          hintStyle: TextStyle(
-                                              color: Colors.grey[400])),
+                                          hintStyle:
+                                              TextStyle(color: Colors.grey[400])),
                                     ),
                                   )
                                 ],
                               ),
                             ),
                             Container(
-                                padding:
-                                    const EdgeInsets.only(top: 10, left: 10),
+                                padding: const EdgeInsets.only(top: 10, left: 10),
                                 alignment: Alignment.centerLeft,
                                 child: Text(currentState,
                                     style: TextStyle(
@@ -188,8 +228,7 @@ class _SignupPageState extends State<SignupPage> {
                                             ? Colors.white
                                             : Colors.red))),
                             Container(
-                              padding:
-                                  const EdgeInsets.only(bottom: 20, top: 20),
+                              padding: const EdgeInsets.only(bottom: 20, top: 20),
                               width: 200,
                               alignment: Alignment.centerRight,
                               child: Text(
@@ -197,9 +236,14 @@ class _SignupPageState extends State<SignupPage> {
                             ),
                             InkWell(
                               onTap: () {
-                                //
-
-                                if (_password == _reEnterPassword) {
+                                if (_firstName == "" ||
+                                    _lastName == "" ||
+                                    _userName == "") {
+                                  setState(() {
+                                    currentState = "Refill";
+                                    isValid = false;
+                                  });
+                                } else if (_password == _reEnterPassword) {
                                   setState(() {
                                     isMatch = true;
                                   });
@@ -210,8 +254,13 @@ class _SignupPageState extends State<SignupPage> {
                                     });
                                   } else if (checkValidAccount(
                                       _userName, _password)) {
-                                    NetworkRequest.sendAccountInfor(
-                                            _userName, _password, _userName)
+                                    AccountRequest.sendAccountInfor(
+                                            _userName,
+                                            _password,
+                                            _userName,
+                                            _firstName,
+                                            _lastName,
+                                            _emails)
                                         .then((value) {
                                       widget.onFet();
                                       Navigator.pop(context);
@@ -252,13 +301,15 @@ class _SignupPageState extends State<SignupPage> {
                             ),
                           ],
                         ),
-                      )
-                    ],
-                  ),
+                      ),
+                    )
+                  ],
                 ),
-              ],
-            ),
-          )),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
     ;
   }

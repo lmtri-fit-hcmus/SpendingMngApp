@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:jira_mobile/models/account_info.dart';
 import 'package:http/http.dart' as http;
 
-class NetworkRequest {
+class AccountRequest {
   static const String server =
       "mongodb+srv://lmtri:leminhtri@mng-spending-app.bkbglht.mongodb.net/spnd_mng";
   static String body = "";
@@ -36,6 +36,12 @@ class NetworkRequest {
       tmp += element["accountId"];
       tmp += "\",\"password\":\"";
       tmp += element["password"];
+      tmp += "\",\"firstName\":\"";
+      tmp += element["firstName"];
+      tmp += "\",\"lastName\":\"";
+      tmp += element["lastName"];
+      tmp += "\",\"email\":\"";
+      tmp += element["email"];
       tmp += "\"}";
       body += tmp;
       body += ",";
@@ -46,10 +52,10 @@ class NetworkRequest {
   }
 
   static Future<void> sendAccountInfor(
-      String userName, String password, String id) async {
+      String userName, String password, String id, String fN, String lN, String email) async {
     var acc = await LoadServer();
     await acc.insert(
-        {'userName': "$userName", 'password': "$password", 'accountId': "$id"});
+        {'userName': "$userName", 'password': "$password", 'accountId': "$id",'firstName': "$fN",'lastName': "$lN",'email': "$email", });
   }
 
   static Future<void> changePasswordRequest(

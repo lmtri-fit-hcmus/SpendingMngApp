@@ -113,7 +113,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 print("cur $currentPass");
                 print("new $newPass");
                 print("re $reEnterPass");
-                NetworkRequest.fetchAccoutInfo().then((dataFromServer) {
+                AccountRequest.fetchAccoutInfo().then((dataFromServer) {
                   dataFromServer.forEach((element) {
                     if (element.accountId == accountId) {
                       if (currentPass != element.password) {
@@ -137,7 +137,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                           errType = 4; //change success!
                         });
 
-                        NetworkRequest.changePasswordRequest(
+                        AccountRequest.changePasswordRequest(
                                 accountId ?? "", newPass, dataFromServer)
                             .then((value) {
                           print("after send");

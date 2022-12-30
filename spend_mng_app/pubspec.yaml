@@ -52,6 +52,7 @@ dependencies:
   flutter_expandable_fab: ^1.6.1
   month_picker_dialog_2: ^0.5.8
   quickalert: ^1.0.1
+  url_launcher: ^6.1.7
 
 dev_dependencies:
   flutter_test:
