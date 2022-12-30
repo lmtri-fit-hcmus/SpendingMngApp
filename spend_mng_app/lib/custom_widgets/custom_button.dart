@@ -8,18 +8,19 @@ class CustomButtonView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         height: 50,
+        margin: EdgeInsets.symmetric(horizontal: 30),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             border: Border.all(width: 2),
             gradient: LinearGradient(colors: [
-              Color.fromARGB(255, 72, 121, 142),
-              Color.fromARGB(116, 45, 143, 208),
+              Color.fromARGB(255, 66, 173, 169),
+              Color.fromARGB(116, 23, 130, 105),
             ])),
         child: Center(
           child: Text(
             this.title,
             style: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
+                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15),
           ),
         ));
   }

@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 class NetworkRequest {
   static const String server =
-      "mongodb+srv://lmtri:leminhtri@mng-spending-app.bkbglht.mongodb.net/account";
+      "mongodb+srv://lmtri:leminhtri@mng-spending-app.bkbglht.mongodb.net/spnd_mng";
   static String body = "";
 
   static Future<DbCollection> LoadServer() async {

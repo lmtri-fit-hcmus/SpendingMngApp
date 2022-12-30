@@ -4,6 +4,11 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:jira_mobile/values/colors_value.dart';
 import 'package:jira_mobile/values/http_link..dart';
+import 'package:month_picker_dialog_2/month_picker_dialog_2.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../backend/data_fetcher.dart';
+import '../values/share_keys.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,10 +18,86 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  DateTime selected_date = DateTime.now();
+  List<String> months = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec'
+  ];
+  Map<String, String> popInfo = {
+    "totalBalanced": "",
+    "income": "",
+    "expense": ""
+  };
+  String? current_acc_id = "";
+
+  Future<void> getAccountId() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      current_acc_id = prefs.getString(AppKey.AccountID);
+    });
+    final tmp = await DataFetcher.fetchPopularInfo(current_acc_id)
+        .then((value) => value);
+    setState(() {
+      popInfo = tmp;
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      getAccountId();
+    });
+  }
+
+  String total = "";
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Container(
+          child: Column(
+            children: [
+              Container(
+                margin: EdgeInsets.only(top: 20),
+                child: Text(
+                  months[selected_date.month - 1],
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  showMonthPicker(
+                    headerColor: AppColor.dart_green,
+                    selectedMonthBackgroundColor: AppColor.dart_green,
+                    unselectedMonthTextColor: Colors.black,
+                    customHeight: 240,
+                    context: context,
+                    initialDate: DateTime.now(),
+                  ).then((date) {
+                    if (date != null) {
+                      setState(() {
+                        selected_date = date;
+                      });
+                    }
+                  });
+                },
+                child: Icon(Icons.arrow_drop_down),
+              ),
+            ],
+          ),
+        ),
         Container(
           width: MediaQuery.of(context).size.width,
           margin: EdgeInsets.only(top: 120, left: 20, right: 20),
@@ -41,7 +122,7 @@ class _HomePageState extends State<HomePage> {
                   margin: EdgeInsets.only(top: 5, left: 10, bottom: 30),
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    '\$2,500,000',
+                    '\$${popInfo["totalBalanced"]}',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -71,7 +152,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                             Container(
                               width: double.infinity,
-                              child: Text("\$1,800,000",
+                              child: Text("\$${popInfo["income"]}",
                                   style: TextStyle(color: Colors.white)),
                             )
                           ],
@@ -91,11 +172,11 @@ class _HomePageState extends State<HomePage> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 Icon(
-                                  Icons.arrow_circle_down,
+                                  Icons.arrow_circle_up,
                                   color: Colors.white,
                                 ),
                                 Text(
-                                  "Income",
+                                  "Expenses",
                                   style: TextStyle(color: Colors.white38),
                                 )
                               ],
@@ -103,7 +184,7 @@ class _HomePageState extends State<HomePage> {
                             Container(
                               alignment: Alignment.centerRight,
                               width: double.infinity,
-                              child: Text("\$1,800,000",
+                              child: Text("\$${popInfo["expense"]}",
                                   style: TextStyle(color: Colors.white)),
                             )
                           ],
@@ -126,7 +207,7 @@ class _HomePageState extends State<HomePage> {
         ),
         Flexible(
           child: Container(
-            height: 1000,
+            height: 200,
             child: ListView(
               shrinkWrap: true,
               children: [
@@ -138,7 +219,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-        )
+        ),
       ],
     );
   }

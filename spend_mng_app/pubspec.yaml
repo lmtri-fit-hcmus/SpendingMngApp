@@ -47,9 +47,11 @@ dependencies:
   http: ^0.13.5 
   shared_preferences: ^2.0.15
   mongo_dart: ^0.8.2
-  intl: ^0.18.0
+  intl: ^0.17.0
   expandable: ^5.0.1
   flutter_expandable_fab: ^1.6.1
+  month_picker_dialog_2: ^0.5.8
+  quickalert: ^1.0.1
 
 dev_dependencies:
   flutter_test:

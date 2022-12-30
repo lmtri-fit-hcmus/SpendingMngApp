@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
+import 'package:jira_mobile/pages/add_expense.dart';
+import 'package:jira_mobile/pages/add_income.dart';
 import 'package:jira_mobile/pages/chart_page.dart';
 import 'package:jira_mobile/pages/home_page.dart';
 import 'package:jira_mobile/pages/profile_page.dart';
@@ -24,6 +27,13 @@ class _MainPageState extends State<MainPage> {
     ChartPage(),
     Profile(),
   ];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.bottom]);
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -43,7 +53,10 @@ class _MainPageState extends State<MainPage> {
           children: [
             InkWell(
               // splash color
-              onTap: () {}, // button pressed
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => AddIncome()));
+              }, // button pressed
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -53,7 +66,10 @@ class _MainPageState extends State<MainPage> {
               ),
             ),
             InkWell(
-              onTap: () {}, // button pressed
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => AddExpense()));
+              }, // button pressed
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -68,14 +84,10 @@ class _MainPageState extends State<MainPage> {
       extendBody: true,
       body: Stack(children: <Widget>[
         Container(
-          height: 250,
-          child: AppBar(
-              backgroundColor: AppColor.main_color,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(
-                  bottom: Radius.elliptical(180, 60),
-                ),
-              )),
+          child: Image.asset('assets/img/bkgr.png'),
+        ),
+        Container(
+          child: Image.asset('assets/img/circle.png'),
         ),
         Container(child: _widgetOptions.elementAt(_selectedIndex)),
       ]),

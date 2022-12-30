@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:jira_mobile/custom_widgets/custom_button.dart';
 import 'package:jira_mobile/models/account_info.dart';
-import 'package:jira_mobile/networks/account_request.dart';
+import 'package:jira_mobile/backend/account_request.dart';
 import 'package:jira_mobile/values/share_keys.dart';
 import 'package:password_text_field/password_text_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ChangePasswordPage extends StatefulWidget {
-  
   const ChangePasswordPage({super.key});
 
   @override
@@ -110,7 +109,6 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
               ),
             ),
             InkWell(
-              
               onTap: () {
                 print("cur $currentPass");
                 print("new $newPass");

@@ -146,6 +146,11 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
+  flutter_localizations:
+    dependency: transitive
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -190,7 +195,7 @@ packages:
       name: intl
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.18.0"
+    version: "0.17.0"
   js:
     dependency: transitive
     description:
@@ -254,6 +259,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.0"
+  month_picker_dialog_2:
+    dependency: "direct main"
+    description:
+      name: month_picker_dialog_2
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.8"
   packages_extensions:
     dependency: transitive
     description:
@@ -352,6 +364,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.2.4"
+  quickalert:
+    dependency: "direct main"
+    description:
+      name: quickalert
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   rational:
     dependency: transitive
     description:
@@ -359,6 +378,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.2"
+  rxdart:
+    dependency: transitive
+    description:
+      name: rxdart
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.27.7"
   sasl_scram:
     dependency: transitive
     description:

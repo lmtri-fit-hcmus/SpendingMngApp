@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:jira_mobile/pages/change_password_page.dart';
+import 'package:jira_mobile/pages/login_page.dart';
 import 'package:jira_mobile/values/colors_value.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -70,8 +73,26 @@ class _ProfileState extends State<Profile> {
                       MaterialPageRoute(
                           builder: (context) => ChangePasswordPage()));
                 },
-              )
-              //Line(ic: Icons.logout, text: 'Log out'),
+              ),
+              Line(
+                  ic: Icons.logout,
+                  text: 'Log out',
+                  onTap: () {
+                    QuickAlert.show(
+                        context: context,
+                        type: QuickAlertType.confirm,
+                        text: 'Do you want to logout',
+                        confirmBtnText: 'Yes',
+                        cancelBtnText: 'No',
+                        confirmBtnColor: AppColor.main_color,
+                        onConfirmBtnTap: () {
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginPage()),
+                              (route) => false);
+                        });
+                  }),
             ],
           ),
         ),
