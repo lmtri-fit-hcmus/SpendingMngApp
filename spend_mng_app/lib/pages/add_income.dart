@@ -13,6 +13,7 @@ class AddIncome extends StatefulWidget {
 }
 
 class _AddIncomeState extends State<AddIncome> {
+  DateTime selectedDate = DateTime.now();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,9 +56,9 @@ class _AddIncomeState extends State<AddIncome> {
                 ),
               ),
               Container(
-                height: 450,
+                height: 580,
                 width: double.infinity,
-                margin: EdgeInsets.only(left: 30, right: 30, top: 150),
+                margin: EdgeInsets.only(left: 30, right: 30, top: 80),
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20),
@@ -72,7 +73,7 @@ class _AddIncomeState extends State<AddIncome> {
                     Container(
                       margin: EdgeInsets.only(top: 30, left: 10),
                       alignment: Alignment.centerLeft,
-                      child: Text('NAME'),
+                      child: Text('TYPE'),
                     ),
                     Container(
                       margin: EdgeInsets.all(10),
@@ -83,7 +84,27 @@ class _AddIncomeState extends State<AddIncome> {
                       child: TextField(
                         decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: "Username",
+                            hintText: "   Income Name",
+                            hintStyle: TextStyle(color: Colors.grey[400])),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 10, left: 10),
+                      alignment: Alignment.centerLeft, 
+                      child: Text('NAME'),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(left: 10),
+                      margin: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(
+                              color: Color.fromARGB(255, 90, 87, 87))),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          
+                            border: InputBorder.none,
+                            hintText: " Income Name",
                             hintStyle: TextStyle(color: Colors.grey[400])),
                       ),
                     ),
@@ -126,7 +147,7 @@ class _AddIncomeState extends State<AddIncome> {
                           children: [
                             Container(
                                 margin: EdgeInsets.only(left: 20),
-                                child: Text("Hello lmtr")),
+                                child: Text(selectedDate.year.toString()+"-"+selectedDate.month.toString()+"-"+selectedDate.day.toString())),
                             Container(
                               child: IconButton(
                                 icon: Icon(Icons.calendar_today),
@@ -149,8 +170,13 @@ class _AddIncomeState extends State<AddIncome> {
                                         ),
                                         child: child!,
                                       );
-                                    },
-                                  );
+                                    }
+                                    
+                                  ).then((value) {
+                                    setState(() {
+                                      selectedDate = value??DateTime.now();
+                                    });
+                                  });
                                 },
                               ),
                             )

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import "package:mongo_dart/mongo_dart.dart";
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -25,6 +26,8 @@ class AccountRequest {
   }
 
   static Future<List<AccountInfo>> fetchAccoutInfo({int page = 1}) async {
+
+
     var acc = await LoadServer().then((value) => value);
     String body = "[";
     int i = 0;
@@ -34,6 +37,8 @@ class AccountRequest {
       tmp += element["userName"];
       tmp += "\",\"accountId\":\"";
       tmp += element["accountId"];
+      tmp += "\",\"_id\":\"";
+      tmp += element["_id"].toString().replaceAll("ObjectId(\"", "").replaceAll("\")", "");
       tmp += "\",\"password\":\"";
       tmp += element["password"];
       tmp += "\",\"firstName\":\"";

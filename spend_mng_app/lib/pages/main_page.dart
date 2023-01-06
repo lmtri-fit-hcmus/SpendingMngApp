@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -21,21 +23,22 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
-  
+  bool _load = false;
+
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+
   static List<Widget> _widgetOptions = <Widget>[
     HomePage(),
     ChartPage(),
     Profile(),
   ];
 
-
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: [SystemUiOverlay.bottom]);
   }
@@ -72,8 +75,12 @@ class _MainPageState extends State<MainPage> {
             ),
             InkWell(
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AddExpense()));
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AddExpense(),
+                  ),
+                );
               }, // button pressed
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

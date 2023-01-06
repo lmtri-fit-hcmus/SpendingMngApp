@@ -31,13 +31,17 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    setState(() {
-      fetchAccount();
-    });
+    
+    Future<List<AccountInfo>> res = AccountRequest.fetchAccoutInfo();
+    res.then((dataFromServer) {
+      setState(() {
+        listAccInf = dataFromServer;
+      });});
+
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: [SystemUiOverlay.bottom]);
   }
-
+  String ObjId = "";
   String userName = "";
   String password = "";
   String errStr = "";
@@ -45,9 +49,11 @@ class _LoginPageState extends State<LoginPage> {
   setPersonalInfo(String _accId, String fn, String ln, String em) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(AppKey.AccountID, _accId).then((bool success) {});
+    prefs.setString("Object_account_id", ObjId).then((bool success) {});
     prefs.setString(AppKey.FirstName, fn).then((bool success) {});
     prefs.setString(AppKey.LastName, ln).then((bool success) {});
     prefs.setString(AppKey.Email, em).then((bool success) {});
+    prefs.setBool("isCall", false).then((bool success) {});
   }
 
   @override
@@ -59,7 +65,6 @@ class _LoginPageState extends State<LoginPage> {
         fetchAccount();
       });
     }
-
     return Scaffold(
         backgroundColor: Colors.white,
         body: Stack(
@@ -159,12 +164,14 @@ class _LoginPageState extends State<LoginPage> {
                                 if (listAccInf[i].userName == userName) {
                                   if (listAccInf[i].password == password) {
                                     setState(() {
+                                      ObjId = listAccInf[i].id.toString().replaceAll("ObjectId(\"", "").replaceAll("\")", "");
                                       errStr = "";
                                       setPersonalInfo(
                                           listAccInf[i].accountId ?? "",
                                           listAccInf[i].firstName ?? "",
                                           listAccInf[i].lastName ?? "",
                                           listAccInf[i].email ?? "", );
+                                      
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(

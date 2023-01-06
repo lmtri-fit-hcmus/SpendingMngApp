@@ -1,4 +1,7 @@
+import 'package:mongo_dart/mongo_dart.dart';
+
 class AccountInfo {
+  ObjectId? id;
   String? accountId;
   String? userName;
   String? password;
@@ -10,6 +13,7 @@ class AccountInfo {
   AccountInfo({this.accountId, this.userName, this.password});
 
   AccountInfo.fromJson(Map<String, dynamic> json) {
+    id = ObjectId.fromHexString(json["_id"]);
     accountId = json['accountId'];
     userName = json['userName'];
     password = json['password'];
@@ -20,6 +24,7 @@ class AccountInfo {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data["_id"] = this.id;
     data['accountId'] = this.accountId;
     data['userName'] = this.userName;
     data['password'] = this.password;
